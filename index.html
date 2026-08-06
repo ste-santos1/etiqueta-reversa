@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Etiqueta Reversa Rede</title>
+
+  <!-- QRCode lib -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    body{ margin:0; padding:20px; background:#f4f4f4; font-family:Arial, sans-serif; }
+    .card{ background:#fff; max-width:1000px; margin:auto; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,.15); }
+    h1{ text-align:center; color:#003366; }
+    .grid{ display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+    input,select{ width:100%; padding:10px; border:1px solid #ccc; border-radius:5px; }
+    label{ font-weight:bold; display:block; margin-bottom:5px; }
+    button{ margin-top:20px; background:#0055cc; color:white; border:none; padding:12px 20px; cursor:pointer; border-radius:5px; }
+    button:hover{ background:#003c91; }
+
+    /* ETIQUETA */
+    .etiqueta{
+      width:180mm;
+      height:120mm;
+      border:3px solid black;
+      margin:20px auto;
+      background:white;
+      page-break-after:always;
+      box-sizing:border-box;
+      padding:10px;
+    }
+    .faixa{ border-bottom:2px solid black; text-align:center; padding:10px; font-weight:bold; font-size:18px; }
+    .titulo{ text-align:center; font-size:32px; font-weight:bold; padding:10px; }
+    .info{ padding:0 20px; }
+    .info div{ margin:8px 0; font-size:18px; }
+    .volume{ text-align:center; font-size:28px; font-weight:bold; margin-top:15px; }
+    .dados{ display:flex; justify-content:space-around; margin-top:20px; }
+    .bloco{ text-align:center; }
+    .valor{ font-size:32px; font-weight:bold; }
+    .qrs{ display:flex; justify-content:space-evenly; margin-top:15px; }
+    .rodape{ text-align:center; color:red; font-size:24px; font-weight:bold; margin-top:10px; }
+
+    @media print{
+      .card{ box-shadow:none; }
+      .no-print{ display:none; }
+      body{ background:white; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card no-print">
+    <h1>Etiqueta Reversa Rede</h1>
+
+    <div class="grid">
+      <div>
+        <label>Destino / Polo Receptor</label>
+        <input id="destino" type="text" placeholder="Ex: Polo ABC" />
+      </div>
+
+      <div>
+        <label>Remetente</label>
+        <input id="remetente" type="text" placeholder="Ex: Empresa X" />
+      </div>
+
+      <div>
+        <label>Polo Origem</label>
+        <input id="origem" type="text" placeholder="Ex: Polo Y" />
+      </div>
+
+      <div>
+        <label>OS</label>
+        <input id="os" type="text" placeholder="Número da OS" />
+      </div>
+
+      <div>
+        <label>NF</label>
+        <input id="nf" type="text" placeholder="Número da Nota Fiscal" />
+      </div>
+
+      <div>
+        <label>Quantidade de Caixas</label>
+        <input id="qtd" type="number" min="1" value="1" />
+      </div>
+    </div>
+
+    <button onclick="gerarEtiquetas()">Gerar Etiquetas</button>
+    <button onclick="window.print()">Imprimir</button>
+  </div>
+
+  <div id="resultado"></div>
+
+  <script>
+    function gerarEtiquetas(){
+      const destino = document.getElementById('destino').value || '-';
+      const remetente = document.getElementById('remetente').value || '-';
+      const origem = document.getElementById('origem').value || '-';
+      const os = document.getElementById('os').value || '-';
+      const nf = document.getElementById('nf').value || '-';
+      let qtd = parseInt(document.getElementById('qtd').value, 10);
+      if (isNaN(qtd) || qtd < 1) qtd = 1;
+      if (qtd > 50) { if(!confirm('Você pediu mais de 50 etiquetas. Continuar?')) return; }
+
+      let html = '';
+      for (let i = 1; i <= qtd; i++) {
+        html += `
+<div class="etiqueta">
+  <div class="faixa">TRANSPORTE - COLE SUA ETIQUETA AQUI</div>
+  <div class="titulo">REVERSA - REDE</div>
+
+  <div class="info">
+    <div><b>DESTINO / POLO RECEPTOR:</b> ${escapeHtml(destino)}</div>
+    <div><b>REMETENTE:</b> ${escapeHtml(remetente)}</div>
+    <div><b>POLO ORIGEM:</b> ${escapeHtml(origem)}</div>
+    <div><b>CONFERÊNCIA:</b> OS ${escapeHtml(os)} | NF ${escapeHtml(nf)}</div>
+  </div>
+
+  <div class="volume">VOLUME DE CAIXA ${i}/${qtd}</div>
+
+  <div class="dados">
+    <div class="bloco">
+      <div>OS</div>
+      <div class="valor">${escapeHtml(os)}</div>
+    </div>
+
+    <div class="bloco">
+      <div>NF</div>
+      <div class="valor">${escapeHtml(nf)}</div>
+    </div>
+  </div>
+
+  <div class="qrs">
+    <div id="qros${i}"></div>
+    <div id="qrnf${i}"></div>
+  </div>
+
+  <div class="rodape">MANUSEAR COM CUIDADO</div>
+</div>
+`;
+      }
+
+      const resultado = document.getElementById('resultado');
+      resultado.innerHTML = html;
+
+      // gerar QRCodes depois do innerHTML
+      for (let i = 1; i <= qtd; i++) {
+        const elemOs = document.getElementById(`qros${i}`);
+        const elemNf = document.getElementById(`qrnf${i}`);
+        if (elemOs) new QRCode(elemOs, { text: `OS:${os}|vol:${i}/${qtd}`, width:90, height:90 });
+        if (elemNf) new QRCode(elemNf, { text: `NF:${nf}|vol:${i}/${qtd}`, width:90, height:90 });
+      }
+    }
+
+    // pequena função para escapar HTML (evita injeção simples)
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+  </script>
+</body>
+</html>
