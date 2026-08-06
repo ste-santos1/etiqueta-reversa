@@ -27,18 +27,107 @@
       background:white;
       page-break-after:always;
       box-sizing:border-box;
-      padding:10px;
+      padding:8mm;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
     }
-    .faixa{ border-bottom:2px solid black; text-align:center; padding:10px; font-weight:bold; font-size:18px; }
-    .titulo{ text-align:center; font-size:32px; font-weight:bold; padding:10px; }
-    .info{ padding:0 20px; }
-    .info div{ margin:8px 0; font-size:18px; }
-    .volume{ text-align:center; font-size:28px; font-weight:bold; margin-top:15px; }
-    .dados{ display:flex; justify-content:space-around; margin-top:20px; }
+
+    /* top: cole-box + content */
+    .etiqueta .top{
+      display:flex;
+      gap:8mm;
+      align-items:flex-start;
+    }
+
+    /* Quadrado “cole aqui” */
+    .cole-box{
+      width:60mm;
+      height:60mm;
+      min-width:60mm;
+      min-height:60mm;
+      border:2px dashed #000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      font-weight:bold;
+      font-size:12px;
+      box-sizing:border-box;
+      padding:4px;
+    }
+
+    /* conteúdo ao lado */
+    .content-box{
+      flex:1;
+      min-width:0; /* para truncamento correto em flex */
+    }
+
+    /* manter faixa e titulo dentro da content-box */
+    .faixa{
+      border-bottom:2px solid black;
+      text-align:center;
+      padding:6px 0;
+      font-weight:bold;
+      font-size:14px;
+    }
+    .titulo{ font-size:28px; font-weight:bold; padding:6px 0; text-align:center; }
+
+    .info{ padding:0 6px; }
+    .info div{ margin:6px 0; font-size:14px; }
+    .volume{ text-align:center; font-size:22px; font-weight:bold; margin-top:6mm; }
+    .dados{ display:flex; justify-content:space-around; margin-top:6mm; }
     .bloco{ text-align:center; }
-    .valor{ font-size:32px; font-weight:bold; }
-    .qrs{ display:flex; justify-content:space-evenly; margin-top:15px; }
-    .rodape{ text-align:center; color:red; font-size:24px; font-weight:bold; margin-top:10px; }
+    .valor{ font-size:26px; font-weight:bold; }
+
+    /* QRs: wrapper com tamanho fixo e conteúdo responsivo */
+    .qrs{
+      display:flex;
+      gap:20mm;
+      justify-content:center;
+      align-items:flex-end;
+      margin-top:6mm;
+    }
+    .qr-wrap{
+      width:24mm;
+      height:24mm;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    /* Certificar que o elemento gerado pela lib ocupa o wrapper */
+    .qr-wrap img,
+    .qr-wrap canvas,
+    .qr-wrap table {
+      max-width:100%;
+      max-height:100%;
+      width:auto;
+      height:auto;
+      display:block;
+    }
+
+    /* rodapé e demais ajustes */
+    .rodape{ text-align:center; color:red; font-size:18px; font-weight:bold; margin-top:6mm; }
+
+    /* Em telas pequenas ou caso queira empilhar o cole-box abaixo, use: */
+    @media print, (max-width:200mm){
+      .etiqueta .top{
+        flex-direction:row; /* impressão em página larga mantém side-by-side */
+      }
+    }
+    /* Se quiser forçar empilhamento em impressão pequena: */
+    @media (max-width:1200px){
+      .etiqueta .top{
+        flex-direction:column;
+        gap:6mm;
+      }
+      .cole-box{
+        width:100%;
+        height:36mm;
+      }
+      .qr-wrap{ width:28mm; height:28mm; }
+    }
 
     @media print{
       .card{ box-shadow:none; }
@@ -104,14 +193,20 @@
       for (let i = 1; i <= qtd; i++) {
         html += `
 <div class="etiqueta">
-  <div class="faixa">TRANSPORTE - COLE SUA ETIQUETA AQUI</div>
-  <div class="titulo">REVERSA - REDE</div>
+  <div class="top">
+    <div class="cole-box">TRANSPORTE<br><span style="font-size:10px">COLE SUA ETIQUETA AQUI</span></div>
 
-  <div class="info">
-    <div><b>DESTINO / POLO RECEPTOR:</b> ${escapeHtml(destino)}</div>
-    <div><b>REMETENTE:</b> ${escapeHtml(remetente)}</div>
-    <div><b>POLO ORIGEM:</b> ${escapeHtml(origem)}</div>
-    <div><b>CONFERÊNCIA:</b> OS ${escapeHtml(os)} | NF ${escapeHtml(nf)}</div>
+    <div class="content-box">
+      <div class="faixa">TRANSPORTE - COLE SUA ETIQUETA AQUI</div>
+      <div class="titulo">REVERSA - REDE</div>
+
+      <div class="info">
+        <div><b>DESTINO / POLO RECEPTOR:</b> ${escapeHtml(destino)}</div>
+        <div><b>REMETENTE:</b> ${escapeHtml(remetente)}</div>
+        <div><b>POLO ORIGEM:</b> ${escapeHtml(origem)}</div>
+        <div><b>CONFERÊNCIA:</b> OS ${escapeHtml(os)} | NF ${escapeHtml(nf)}</div>
+      </div>
+    </div>
   </div>
 
   <div class="volume">VOLUME DE CAIXA ${i}/${qtd}</div>
@@ -129,8 +224,8 @@
   </div>
 
   <div class="qrs">
-    <div id="qros${i}"></div>
-    <div id="qrnf${i}"></div>
+    <div class="qr-wrap" id="qros${i}"></div>
+    <div class="qr-wrap" id="qrnf${i}"></div>
   </div>
 
   <div class="rodape">MANUSEAR COM CUIDADO</div>
@@ -145,8 +240,17 @@
       for (let i = 1; i <= qtd; i++) {
         const elemOs = document.getElementById(`qros${i}`);
         const elemNf = document.getElementById(`qrnf${i}`);
-        if (elemOs) new QRCode(elemOs, { text: `OS:${os}|vol:${i}/${qtd}`, width:90, height:90 });
-        if (elemNf) new QRCode(elemNf, { text: `NF:${nf}|vol:${i}/${qtd}`, width:90, height:90 });
+
+        if (elemOs) {
+          elemOs.innerHTML = '';
+          const sizeOs = Math.floor(Math.min(elemOs.clientWidth, elemOs.clientHeight));
+          new QRCode(elemOs, { text: `OS:${os}|vol:${i}/${qtd}`, width: sizeOs, height: sizeOs });
+        }
+        if (elemNf) {
+          elemNf.innerHTML = '';
+          const sizeNf = Math.floor(Math.min(elemNf.clientWidth, elemNf.clientHeight));
+          new QRCode(elemNf, { text: `NF:${nf}|vol:${i}/${qtd}`, width: sizeNf, height: sizeNf });
+        }
       }
     }
 
@@ -156,7 +260,7 @@
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
+        .replace(/\"/g, '&quot;')
         .replace(/'/g, '&#39;');
     }
   </script>
