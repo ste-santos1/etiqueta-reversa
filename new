@@ -1,0 +1,379 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<title>Exported from Notepad++</title>
+<style type="text/css">
+span {
+	font-family: 'Courier New';
+	font-size: 10pt;
+	color: #000000;
+}
+.sc0 {
+	font-weight: bold;
+}
+.sc1 {
+	color: #0000FF;
+}
+.sc3 {
+	color: #FF0000;
+}
+.sc6 {
+	font-weight: bold;
+	color: #8000FF;
+}
+.sc8 {
+}
+.sc21 {
+	background: #CFE2F7;
+}
+.sc22 {
+	font-weight: bold;
+	color: #0000DD;
+	background: #CFE2F7;
+}
+.sc23 {
+	color: #0000DD;
+	background: #ECF4FC;
+}
+</style>
+</head>
+<body>
+<div style="float: left; white-space: pre; line-height: 1; background: #FFFFFF; "><span class="sc21">&lt;!</span><span class="sc22">DOCTYPE</span><span class="sc21"> </span><span class="sc23">html</span><span class="sc21">&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;html</span><span class="sc8"> </span><span class="sc3">lang</span><span class="sc8">=</span><span class="sc6">"pt-BR"</span><span class="sc1">&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;head&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;meta</span><span class="sc8"> </span><span class="sc3">charset</span><span class="sc8">=</span><span class="sc6">"UTF-8"</span><span class="sc1">&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;meta</span><span class="sc8"> </span><span class="sc3">name</span><span class="sc8">=</span><span class="sc6">"viewport"</span><span class="sc8"> </span><span class="sc3">content</span><span class="sc8">=</span><span class="sc6">"width=device-width, initial-scale=1.0"</span><span class="sc1">&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;title&gt;</span><span class="sc0">Etiqueta Reversa Rede</span><span class="sc1">&lt;/title&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;ttps:</span><span class="sc8">//</span><span class="sc3">cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.jsscript</span><span class="sc1">&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;style&gt;</span><span class="sc0">
+
+body{
+    margin:0;
+    padding:20px;
+    background:#f4f4f4;
+    font-family:Arial, sans-serif;
+}
+
+.card{
+    background:#fff;
+    max-width:1000px;
+    margin:auto;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.15);
+}
+
+h1{
+    text-align:center;
+    color:#003366;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+label{
+    font-weight:bold;
+    display:block;
+    margin-bottom:5px;
+}
+
+button{
+    margin-top:20px;
+    background:#0055cc;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    cursor:pointer;
+    border-radius:5px;
+}
+
+button:hover{
+    background:#003c91;
+}
+
+/* ETIQUETA */
+
+.etiqueta{
+
+    width:180mm;
+    height:120mm;
+
+    border:3px solid black;
+
+    margin:20px auto;
+
+    background:white;
+
+    page-break-after:always;
+
+}
+
+.faixa{
+    border-bottom:2px solid black;
+    text-align:center;
+    padding:10px;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.titulo{
+    text-align:center;
+    font-size:32px;
+    font-weight:bold;
+    padding:10px;
+}
+
+.info{
+    padding:0 20px;
+}
+
+.info div{
+    margin:8px 0;
+    font-size:18px;
+}
+
+.volume{
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+    margin-top:15px;
+}
+
+.dados{
+    display:flex;
+    justify-content:space-around;
+    margin-top:20px;
+}
+
+.bloco{
+    text-align:center;
+}
+
+.valor{
+    font-size:32px;
+    font-weight:bold;
+}
+
+.qrs{
+    display:flex;
+    justify-content:space-evenly;
+    margin-top:15px;
+}
+
+.rodape{
+    text-align:center;
+    color:red;
+    font-size:24px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+@media print{
+
+    .card{
+        box-shadow:none;
+    }
+
+    .no-print{
+        display:none;
+    }
+
+    body{
+        background:white;
+    }
+
+}
+
+</span><span class="sc1">&lt;/style&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;/head&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;body&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div</span><span class="sc8"> </span><span class="sc3">class</span><span class="sc8">=</span><span class="sc6">"card no-print"</span><span class="sc1">&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;h1&gt;</span><span class="sc0">Etiqueta Reversa Rede</span><span class="sc1">&lt;/h1&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div</span><span class="sc8"> </span><span class="sc3">class</span><span class="sc8">=</span><span class="sc6">"grid"</span><span class="sc1">&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;label&gt;</span><span class="sc0">Destino / Polo Receptor</span><span class="sc1">&lt;/label&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;input</span><span class="sc8"> </span><span class="sc3">id</span><span class="sc8">=</span><span class="sc6">"destino"</span><span class="sc8"> </span><span class="sc3">value</span><span class="sc8">=</span><span class="sc6">"CD DHL"</span><span class="sc1">&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;label&gt;</span><span class="sc0">Remetente</span><span class="sc1">&lt;/label&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;input</span><span class="sc8"> </span><span class="sc3">id</span><span class="sc8">=</span><span class="sc6">"remetente"</span><span class="sc1">&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;label&gt;</span><span class="sc0">Polo Origem</span><span class="sc1">&lt;/label&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;input</span><span class="sc8"> </span><span class="sc3">id</span><span class="sc8">=</span><span class="sc6">"origem"</span><span class="sc1">&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;label&gt;</span><span class="sc0">OS</span><span class="sc1">&lt;/label&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;input</span><span class="sc8"> </span><span class="sc3">id</span><span class="sc8">=</span><span class="sc6">"os"</span><span class="sc1">&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;label&gt;</span><span class="sc0">NF</span><span class="sc1">&lt;/label&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;input</span><span class="sc8"> </span><span class="sc3">id</span><span class="sc8">=</span><span class="sc6">"nf"</span><span class="sc1">&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;label&gt;</span><span class="sc0">Quantidade de Caixas</span><span class="sc1">&lt;/label&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;input</span><span class="sc8"> </span><span class="sc3">type</span><span class="sc8">=</span><span class="sc6">"number"</span><span class="sc8"> </span><span class="sc3">id</span><span class="sc8">=</span><span class="sc6">"qtd"</span><span class="sc8"> </span><span class="sc3">value</span><span class="sc8">=</span><span class="sc6">"1"</span><span class="sc1">&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;button</span><span class="sc8"> </span><span class="sc3">onclick</span><span class="sc8">=</span><span class="sc6">"gerarEtiquetas()"</span><span class="sc1">&gt;</span><span class="sc0">
+Gerar Etiquetas
+</span><span class="sc1">&lt;/button&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;button</span><span class="sc8"> </span><span class="sc3">onclick</span><span class="sc8">=</span><span class="sc6">"window.print()"</span><span class="sc1">&gt;</span><span class="sc0">
+Imprimir
+</span><span class="sc1">&lt;/button&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div</span><span class="sc8"> </span><span class="sc3">id</span><span class="sc8">=</span><span class="sc6">"resultado"</span><span class="sc1">&gt;&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;script&gt;</span><span class="sc0">
+
+function gerarEtiquetas(){
+
+let destino =
+document.getElementById("destino").value;
+
+let remetente =
+document.getElementById("remetente").value;
+
+let origem =
+document.getElementById("origem").value;
+
+let os =
+document.getElementById("os").value;
+
+let nf =
+document.getElementById("nf").value;
+
+let qtd =
+parseInt(document.getElementById("qtd").value);
+
+let html = "";
+
+for(let i=1;i</span><span class="sc1">&lt;</span><span class="sc8">=</span><span class="sc3">qtd</span><span class="sc8">;</span><span class="sc3">i</span><span class="sc8">++){
+
+</span><span class="sc3">html</span><span class="sc8"> += `
+
+&lt;</span><span class="sc3">div</span><span class="sc8"> </span><span class="sc3">class</span><span class="sc8">=</span><span class="sc6">"etiqueta"</span><span class="sc1">&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div</span><span class="sc8"> </span><span class="sc3">class</span><span class="sc8">=</span><span class="sc6">"faixa"</span><span class="sc1">&gt;</span><span class="sc0">
+TRANSPORTE - COLE SUA ETIQUETA AQUI
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div</span><span class="sc8"> </span><span class="sc3">class</span><span class="sc8">=</span><span class="sc6">"titulo"</span><span class="sc1">&gt;</span><span class="sc0">
+REVERSA - REDE
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div</span><span class="sc8"> </span><span class="sc3">class</span><span class="sc8">=</span><span class="sc6">"info"</span><span class="sc1">&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div&gt;&lt;b&gt;</span><span class="sc0">DESTINO / POLO RECEPTOR:</span><span class="sc1">&lt;/b&gt;</span><span class="sc0"> ${destino}</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div&gt;&lt;b&gt;</span><span class="sc0">REMETENTE:</span><span class="sc1">&lt;/b&gt;</span><span class="sc0"> ${remetente}</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div&gt;&lt;b&gt;</span><span class="sc0">POLO ORIGEM:</span><span class="sc1">&lt;/b&gt;</span><span class="sc0"> ${origem}</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div&gt;&lt;b&gt;</span><span class="sc0">CONFERÊNCIA:</span><span class="sc1">&lt;/b&gt;</span><span class="sc0"> OS ${os} | NF ${nf}</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div</span><span class="sc8"> </span><span class="sc3">class</span><span class="sc8">=</span><span class="sc6">"volume"</span><span class="sc1">&gt;</span><span class="sc0">
+
+VOLUME DE CAIXA ${i}/${qtd}
+
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div</span><span class="sc8"> </span><span class="sc3">class</span><span class="sc8">=</span><span class="sc6">"dados"</span><span class="sc1">&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div</span><span class="sc8"> </span><span class="sc3">class</span><span class="sc8">=</span><span class="sc6">"bloco"</span><span class="sc1">&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;div&gt;</span><span class="sc0">OS</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;div</span><span class="sc8"> </span><span class="sc3">class</span><span class="sc8">=</span><span class="sc6">"valor"</span><span class="sc1">&gt;</span><span class="sc0">${os}</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div</span><span class="sc8"> </span><span class="sc3">class</span><span class="sc8">=</span><span class="sc6">"bloco"</span><span class="sc1">&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;div&gt;</span><span class="sc0">NF</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;div</span><span class="sc8"> </span><span class="sc3">class</span><span class="sc8">=</span><span class="sc6">"valor"</span><span class="sc1">&gt;</span><span class="sc0">${nf}</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div</span><span class="sc8"> </span><span class="sc3">class</span><span class="sc8">=</span><span class="sc6">"qrs"</span><span class="sc1">&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;div</span><span class="sc8"> </span><span class="sc3">id</span><span class="sc8">=</span><span class="sc6">"qros${i}"</span><span class="sc1">&gt;&lt;/div&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;div</span><span class="sc8"> </span><span class="sc3">id</span><span class="sc8">=</span><span class="sc6">"qrnf${i}"</span><span class="sc1">&gt;&lt;/div&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;div</span><span class="sc8"> </span><span class="sc3">class</span><span class="sc8">=</span><span class="sc6">"rodape"</span><span class="sc1">&gt;</span><span class="sc0">
+MANUSEAR COM CUIDADO
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;/div&gt;</span><span class="sc0">
+`;
+
+}
+
+document.getElementById("resultado").innerHTML = html;
+
+for(let i=1;i</span><span class="sc1">&lt;</span><span class="sc8">=</span><span class="sc3">qtd</span><span class="sc8">;</span><span class="sc3">i</span><span class="sc8">++){
+
+</span><span class="sc3">new</span><span class="sc8"> </span><span class="sc3">QRCode</span><span class="sc8">(
+</span><span class="sc3">document.getElementById</span><span class="sc8">(`</span><span class="sc3">qros</span><span class="sc8">${</span><span class="sc3">i</span><span class="sc8">}`),
+{
+</span><span class="sc3">text:</span><span class="sc8">"</span><span class="sc3">OS:</span><span class="sc8">"+</span><span class="sc3">os</span><span class="sc8">,
+</span><span class="sc3">width:90</span><span class="sc8">,
+</span><span class="sc3">height:90</span><span class="sc8">
+}
+);
+
+</span><span class="sc3">new</span><span class="sc8"> </span><span class="sc3">QRCode</span><span class="sc8">(
+</span><span class="sc3">document.getElementById</span><span class="sc8">(`</span><span class="sc3">qrnf</span><span class="sc8">${</span><span class="sc3">i</span><span class="sc8">}`),
+{
+</span><span class="sc3">text:</span><span class="sc8">"</span><span class="sc3">NF:</span><span class="sc8">"+</span><span class="sc3">nf</span><span class="sc8">,
+</span><span class="sc3">width:90</span><span class="sc8">,
+</span><span class="sc3">height:90</span><span class="sc8">
+}
+);
+
+}
+
+}
+
+&lt;/</span><span class="sc3">script</span><span class="sc1">&gt;</span><span class="sc0">
+
+</span><span class="sc1">&lt;/body&gt;</span><span class="sc0">
+</span><span class="sc1">&lt;/html&gt;</span></div></body>
+</html>
