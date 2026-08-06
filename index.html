@@ -40,21 +40,22 @@
       align-items:flex-start;
     }
 
-    /* Quadrado “cole aqui” */
+    /* Quadrado “cole aqui” - maior e sem encolher */
     .cole-box{
-      width:60mm;
-      height:60mm;
-      min-width:60mm;
-      min-height:60mm;
+      flex: 0 0 80mm; /* não encolhe, largura fixa */
+      width:80mm;
+      height:80mm;
+      min-width:80mm;
+      min-height:80mm;
       border:2px dashed #000;
       display:flex;
       align-items:center;
       justify-content:center;
       text-align:center;
       font-weight:bold;
-      font-size:12px;
+      font-size:14px;
       box-sizing:border-box;
-      padding:4px;
+      padding:6px;
     }
 
     /* conteúdo ao lado */
@@ -74,11 +75,14 @@
     .titulo{ font-size:28px; font-weight:bold; padding:6px 0; text-align:center; }
 
     .info{ padding:0 6px; }
-    .info div{ margin:6px 0; font-size:14px; }
+    .info div{ margin:6px 0; font-size:16px; }
+    .info b{ font-size:15px; }
+    .fill{ font-size:18px; font-weight:bold; margin-left:6px; }
+
     .volume{ text-align:center; font-size:22px; font-weight:bold; margin-top:6mm; }
     .dados{ display:flex; justify-content:space-around; margin-top:6mm; }
     .bloco{ text-align:center; }
-    .valor{ font-size:26px; font-weight:bold; }
+    .valor{ font-size:34px; font-weight:bold; }
 
     /* QRs: wrapper com tamanho fixo e conteúdo responsivo */
     .qrs{
@@ -89,8 +93,8 @@
       margin-top:6mm;
     }
     .qr-wrap{
-      width:24mm;
-      height:24mm;
+      width:28mm;
+      height:28mm;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -125,6 +129,7 @@
       .cole-box{
         width:100%;
         height:36mm;
+        flex: 0 0 auto;
       }
       .qr-wrap{ width:28mm; height:28mm; }
     }
@@ -142,7 +147,7 @@
 
     <div class="grid">
       <div>
-        <label>Destino / Polo Receptor</label>
+        <label>Destino</label>
         <input id="destino" type="text" placeholder="Ex: Polo ABC" />
       </div>
 
@@ -194,17 +199,17 @@
         html += `
 <div class="etiqueta">
   <div class="top">
-    <div class="cole-box">TRANSPORTE<br><span style="font-size:10px">COLE SUA ETIQUETA AQUI</span></div>
+    <div class="cole-box">TRANSPORTE<br><span style="font-size:12px">COLE SUA ETIQUETA AQUI</span></div>
 
     <div class="content-box">
       <div class="faixa">TRANSPORTE - COLE SUA ETIQUETA AQUI</div>
       <div class="titulo">REVERSA - REDE</div>
 
       <div class="info">
-        <div><b>DESTINO / POLO RECEPTOR:</b> ${escapeHtml(destino)}</div>
-        <div><b>REMETENTE:</b> ${escapeHtml(remetente)}</div>
-        <div><b>POLO ORIGEM:</b> ${escapeHtml(origem)}</div>
-        <div><b>CONFERÊNCIA:</b> OS ${escapeHtml(os)} | NF ${escapeHtml(nf)}</div>
+        <div><b>DESTINO:</b><span class="fill"> ${escapeHtml(destino)}</span></div>
+        <div><b>REMETENTE:</b><span class="fill"> ${escapeHtml(remetente)}</span></div>
+        <div><b>POLO ORIGEM:</b><span class="fill"> ${escapeHtml(origem)}</span></div>
+        <div><b>CONFERÊNCIA:</b><span class="fill"> OS ${escapeHtml(os)} | NF ${escapeHtml(nf)}</span></div>
       </div>
     </div>
   </div>
