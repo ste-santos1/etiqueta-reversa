@@ -9,41 +9,40 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
-    body{ margin:0; padding:20px; background:#f4f4f4; font-family:Arial, sans-serif; }
-    .card{ background:#fff; max-width:1000px; margin:auto; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,.15); }
+    body{ margin:0; padding:10px; background:#f4f4f4; font-family:Arial, sans-serif; }
+    .card{ background:#fff; max-width:1000px; margin:auto; padding:12px; border-radius:6px; box-shadow:0 0 6px rgba(0,0,0,.12); }
     h1{ text-align:center; color:#003366; }
-    .grid{ display:grid; grid-template-columns:1fr 1fr; gap:15px; }
-    input,select{ width:100%; padding:10px; border:1px solid #ccc; border-radius:5px; }
-    label{ font-weight:bold; display:block; margin-bottom:5px; }
-    button{ margin-top:20px; background:#0055cc; color:white; border:none; padding:12px 20px; cursor:pointer; border-radius:5px; }
+    .grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    input,select{ width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; }
+    label{ font-weight:bold; display:block; margin-bottom:6px; }
+    button{ margin-top:12px; background:#0055cc; color:white; border:none; padding:10px 16px; cursor:pointer; border-radius:6px; }
     button:hover{ background:#003c91; }
 
-    /* impressão: remover margens do page (ajuda no preview; algumas impressoras ignoram) */
+    /* Página/impressão em A4: etiqueta com duas áreas iguais (metade/metade) */
     @page { size: A4; margin: 0; }
 
-    /* layout fixo em duas colunas: agora a coluna esquerda é maior (1fr) e a direita fixa (80mm) */
     .etiqueta{
       width:180mm;
-      height:120mm;
+      height:120mm;            /* total height */
       border:3px solid black;
-      margin:0 auto 20px auto;
+      margin:8px auto 20px auto;
       background:white;
       page-break-after:always;
       box-sizing:border-box;
-      padding:6mm;
+      padding:4mm;             /* small outer padding */
       display:grid;
-      grid-template-columns: 1fr 80mm; /* inverti as colunas: conteúdo principal fica à esquerda */
-      grid-template-rows: 54mm auto 1fr auto; /* cole (maior) no topo, depois conteúdo reduzido, depois volume/dados/qrs, rodapé */
-      gap:6mm;
+      grid-template-columns: 1fr;
+      grid-template-rows: 60mm 60mm; /* EQUAL halves: top = cole, bottom = content */
+      gap:4mm;
       page-break-inside: avoid;
     }
 
-    /* Cole-box: agora no topo, ocupando largura total e maior */
+    /* Cole box (top) full width - larger now */
     .cole-box{
-      grid-column: 1 / 3; /* ocupa ambas as colunas */
+      grid-column: 1 / 2;
       grid-row: 1 / 2;
       width:100%;
-      height:54mm; /* aumentado conforme pedido */
+      height:100%;
       border:2px dashed #000;
       display:flex;
       align-items:center;
@@ -55,48 +54,39 @@
       padding:6px;
     }
 
-    /* Conteúdo (destino/remetente/etc) reduzido e agora à esquerda */
+    /* Content box (bottom) full width */
     .content-box{
-      grid-column: 1 / 2; /* fica na coluna esquerda */
+      grid-column: 1 / 2;
       grid-row: 2 / 3;
-      min-width:0;
+      padding:6mm 8mm;
+      box-sizing:border-box;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
     }
 
-    /* Faixa removida (o elemento .faixa foi eliminado do HTML) */
+    .header-row{ }
+    .faixa{ border-bottom:2px solid black; text-align:center; padding:4px 0; font-weight:bold; font-size:12px; }
+    .titulo{ font-size:22px; font-weight:700; padding:6px 0; text-align:left; }
 
-    /* Título */
-    .titulo{ font-size:30px; font-weight:700; padding:6px 0; text-align:left; }
+    .info{ padding:0; }
+    .info div{ margin:4px 0; font-size:13px; }
+    .info b{ font-size:12px; }
+    .fill{ font-size:20px; font-weight:700; margin-left:6px; }
 
-    /* Campos preenchidos maiores */
-    .info{ padding:0 6px; }
-    .info div{ margin:6px 0; font-size:16px; }
-    .info b{ font-size:15px; }
-    .fill{ font-size:28px; font-weight:800; margin-left:8px; }
+    .volume{ text-align:center; font-size:18px; font-weight:bold; margin-top:6px; }
+    .dados{ display:flex; justify-content:space-around; align-items:center; margin-top:6px; }
+    .bloco{ text-align:center; }
+    .valor{ font-size:34px; font-weight:800; }
 
-    /* Volume e valores grandes (na terceira linha, coluna esquerda) */
-    .volume{ text-align:left; font-size:22px; font-weight:bold; grid-column: 1 / 2; grid-row: 3 / 4; }
-    .dados{ display:flex; justify-content:space-around; margin-top:6mm; grid-column: 1 / 2; grid-row: 3 / 4; }
-    .valor{ font-size:44px; font-weight:900; }
+    .qrs{ display:flex; gap:12mm; justify-content:center; align-items:flex-end; margin-top:6mm; }
+    .qr-wrap{ width:30mm; height:30mm; display:flex; align-items:center; justify-content:center; }
+    .qr-wrap img, .qr-wrap canvas, .qr-wrap table { max-width:100%; max-height:100%; display:block; }
 
-    /* QRs: wrapper larger, também na terceira linha, coluna esquerda */
-    .qrs{ grid-column: 1 / 2; grid-row: 3 / 4; display:flex; gap:12mm; justify-content:center; align-items:flex-end; margin-top:6mm; }
-    .qr-wrap{ width:40mm; height:40mm; display:flex; align-items:center; justify-content:center; }
+    .rodape{ text-align:center; color:red; font-size:14px; font-weight:bold; margin-top:6px; }
 
-    /* Certificar que o elemento gerado pela lib ocupa o wrapper */
-    .qr-wrap img, .qr-wrap canvas, .qr-wrap table { max-width:100%; max-height:100%; width:auto; height:auto; display:block; }
-
-    /* Rodapé full width */
-    .rodape{ grid-column: 1 / 3; grid-row: 4 / 5; text-align:center; color:red; font-size:18px; font-weight:bold; margin-top:6mm; }
-
-    /* Responsivo para telas pequenas: empilha */
-    @media (max-width:1200px){
-      .etiqueta{ display:flex; flex-direction:column; padding:6mm; height:auto; }
-      .cole-box{ width:100%; height:48mm; }
-      .qr-wrap{ width:28mm; height:28mm; }
-    }
-
-    /* evitar sombras no print */
     @media print{ .card{ box-shadow:none; } .no-print{ display:none; } body{ background:white; } }
+    @media (max-width:1200px){ .etiqueta{ width:100%; height:auto; grid-template-rows: auto auto; } .cole-box{ height:48mm; } }
   </style>
 </head>
 <body>
@@ -156,40 +146,44 @@
       for (let i = 1; i <= qtd; i++) {
         html += `
 <div class="etiqueta">
-
   <div class="cole-box">TRANSPORTE<br><span style="font-size:12px">COLE SUA ETIQUETA AQUI</span></div>
 
   <div class="content-box">
-    <div class="titulo">REVERSA - REDE</div>
+    <div class="header-row">
+      <div class="faixa">TRANSPORTE - COLE SUA ETIQUETA AQUI</div>
+      <div class="titulo">REVERSA - REDE</div>
 
-    <div class="info">
-      <div><b>DESTINO:</b><span class="fill"> ${escapeHtml(destino)}</span></div>
-      <div><b>REMETENTE:</b><span class="fill"> ${escapeHtml(remetente)}</span></div>
-      <div><b>POLO ORIGEM:</b><span class="fill"> ${escapeHtml(origem)}</span></div>
-      <div><b>CONFERÊNCIA:</b><span class="fill"> OS ${escapeHtml(os)} | NF ${escapeHtml(nf)}</span></div>
-    </div>
-  </div>
-
-  <div class="volume">VOLUME DE CAIXA ${i}/${qtd}</div>
-
-  <div class="dados">
-    <div class="bloco">
-      <div>OS</div>
-      <div class="valor">${escapeHtml(os)}</div>
+      <div class="info">
+        <div><b>DESTINO:</b><span class="fill"> ${escapeHtml(destino)}</span></div>
+        <div><b>REMETENTE:</b><span class="fill"> ${escapeHtml(remetente)}</span></div>
+        <div><b>POLO ORIGEM:</b><span class="fill"> ${escapeHtml(origem)}</span></div>
+        <div><b>CONFERÊNCIA:</b><span class="fill"> OS ${escapeHtml(os)} | NF ${escapeHtml(nf)}</span></div>
+      </div>
     </div>
 
-    <div class="bloco">
-      <div>NF</div>
-      <div class="valor">${escapeHtml(nf)}</div>
+    <div>
+      <div class="volume">VOLUME DE CAIXA ${i}/${qtd}</div>
+
+      <div class="dados">
+        <div class="bloco">
+          <div>OS</div>
+          <div class="valor">${escapeHtml(os)}</div>
+        </div>
+
+        <div class="bloco">
+          <div>NF</div>
+          <div class="valor">${escapeHtml(nf)}</div>
+        </div>
+      </div>
+
+      <div class="qrs">
+        <div class="qr-wrap" id="qros${i}"></div>
+        <div class="qr-wrap" id="qrnf${i}"></div>
+      </div>
+
+      <div class="rodape">MANUSEAR COM CUIDADO</div>
     </div>
   </div>
-
-  <div class="qrs">
-    <div class="qr-wrap" id="qros${i}"></div>
-    <div class="qr-wrap" id="qrnf${i}"></div>
-  </div>
-
-  <div class="rodape">MANUSEAR COM CUIDADO</div>
 </div>
 `;
       }
@@ -204,24 +198,13 @@
 
         if (elemOs) {
           elemOs.innerHTML = '';
-          const rawSizeOs = Math.min(elemOs.clientWidth, elemOs.clientHeight);
-          const sizeOs = Math.max(32, Math.floor(rawSizeOs) || 128); // fallback caso seja 0
-          try {
-            new QRCode(elemOs, { text: `OS:${os}|vol:${i}/${qtd}`, width: sizeOs, height: sizeOs });
-          } catch (err) {
-            console.error('Erro ao gerar QR OS:', err);
-          }
+          const sizeOs = Math.floor(Math.min(elemOs.clientWidth, elemOs.clientHeight));
+          new QRCode(elemOs, { text: `OS:${os}|vol:${i}/${qtd}`, width: sizeOs, height: sizeOs });
         }
-
         if (elemNf) {
           elemNf.innerHTML = '';
-          const rawSizeNf = Math.min(elemNf.clientWidth, elemNf.clientHeight);
-          const sizeNf = Math.max(32, Math.floor(rawSizeNf) || 128); // fallback caso seja 0
-          try {
-            new QRCode(elemNf, { text: `NF:${nf}|vol:${i}/${qtd}`, width: sizeNf, height: sizeNf });
-          } catch (err) {
-            console.error('Erro ao gerar QR NF:', err);
-          }
+          const sizeNf = Math.floor(Math.min(elemNf.clientWidth, elemNf.clientHeight));
+          new QRCode(elemNf, { text: `NF:${nf}|vol:${i}/${qtd}`, width: sizeNf, height: sizeNf });
         }
       }
     }
