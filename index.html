@@ -18,28 +18,39 @@
     button{ margin-top:20px; background:#0055cc; color:white; border:none; padding:12px 20px; cursor:pointer; border-radius:5px; }
     button:hover{ background:#003c91; }
 
-    /* --- ETIQUETA: layout fixo em duas colunas (garante cole-box sempre do tamanho esperado) --- */
+    /* impressão: remover margens do page (ajuda no preview; algumas impressoras ignoram) */
+    @page { size: A4; margin: 0; }
+
+    /* layout fixo em duas colunas: coluna esquerda fixa para o quadrado (agora embaixo) */
     .etiqueta{
       width:180mm;
       height:120mm;
       border:3px solid black;
-      margin:20px auto;
+      margin:0 auto 20px auto;
       background:white;
       page-break-after:always;
       box-sizing:border-box;
-      padding:8mm;
+      padding:6mm;
       display:grid;
-      grid-template-columns: 80mm 1fr; /* coluna fixa para o quadrado, coluna flexível para conteúdo */
-      grid-template-rows: auto 1fr auto;
-      gap:8mm;
+      grid-template-columns: 80mm 1fr;
+      grid-template-rows: auto auto 1fr auto; /* top content, cole-box, middle (volume/dados/qrs), footer */
+      gap:6mm;
+      page-break-inside: avoid;
     }
 
-    /* Quadrado “cole aqui” - fixa posição e tamanho */
-    .cole-box{
-      grid-column: 1 / 2;
+    /* Conteúdo na primeira linha, segunda coluna */
+    .content-box{
+      grid-column: 2 / 3;
       grid-row: 1 / 2;
-      width:80mm;
-      height:80mm;
+      min-width:0;
+    }
+
+    /* Quadrado “cole aqui” - agora abaixo, ocupando largura total */
+    .cole-box{
+      grid-column: 1 / 3; /* ocupa ambas as colunas */
+      grid-row: 2 / 3;
+      width:100%;
+      height:40mm; /* altura menor para caber em A4 sem cortar */
       border:2px dashed #000;
       display:flex;
       align-items:center;
@@ -51,92 +62,40 @@
       padding:6px;
     }
 
-    /* content-box ocupa a segunda coluna (lado direito) */
-    .content-box{
-      grid-column: 2 / 3;
-      grid-row: 1 / 2;
-      min-width:0;
-    }
+    /* Faixa e título */
+    .faixa{ border-bottom:2px solid black; text-align:center; padding:6px 0; font-weight:bold; font-size:14px; }
+    .titulo{ font-size:30px; font-weight:700; padding:6px 0; text-align:center; }
 
-    /* faixa e título dentro da content-box */
-    .faixa{
-      border-bottom:2px solid black;
-      text-align:center;
-      padding:6px 0;
-      font-weight:bold;
-      font-size:14px;
-    }
-    .titulo{ font-size:28px; font-weight:bold; padding:6px 0; text-align:center; }
-
-    /* Aumentei o tamanho da fonte dos valores preenchidos */
+    /* Campos preenchidos maiores */
     .info{ padding:0 6px; }
     .info div{ margin:6px 0; font-size:16px; }
     .info b{ font-size:15px; }
-    .fill{ font-size:22px; font-weight:700; margin-left:8px; }
+    .fill{ font-size:28px; font-weight:800; margin-left:8px; }
 
-    /* Volume e valores grandes (OS / NF) */
-    .volume{ text-align:center; font-size:24px; font-weight:bold; margin-top:6mm; grid-column: 2 / 3; }
-    .dados{ display:flex; justify-content:space-around; margin-top:6mm; grid-column: 2 / 3; }
-    .bloco{ text-align:center; }
-    .valor{ font-size:40px; font-weight:800; }
+    /* Volume e valores grandes (OS / NF) placed in third row, second column */
+    .volume{ text-align:center; font-size:26px; font-weight:bold; grid-column: 2 / 3; grid-row: 3 / 4; }
+    .dados{ display:flex; justify-content:space-around; margin-top:6mm; grid-column: 2 / 3; grid-row: 3 / 4; }
+    .valor{ font-size:48px; font-weight:900; }
 
-    /* QRs: wrapper maior */
-    .qrs{
-      grid-column: 2 / 3;
-      grid-row: 2 / 3;
-      display:flex;
-      gap:18mm;
-      justify-content:center;
-      align-items:flex-end;
-      margin-top:6mm;
-    }
-    .qr-wrap{
-      width:34mm;   /* aumenta o QR para ficar legível */
-      height:34mm;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
+    /* QRs: wrapper larger, also in third row */
+    .qrs{ grid-column: 2 / 3; grid-row: 3 / 4; display:flex; gap:16mm; justify-content:center; align-items:flex-end; margin-top:6mm; }
+    .qr-wrap{ width:36mm; height:36mm; display:flex; align-items:center; justify-content:center; }
 
     /* Certificar que o elemento gerado pela lib ocupa o wrapper */
-    .qr-wrap img,
-    .qr-wrap canvas,
-    .qr-wrap table {
-      max-width:100%;
-      max-height:100%;
-      width:auto;
-      height:auto;
-      display:block;
-    }
+    .qr-wrap img, .qr-wrap canvas, .qr-wrap table { max-width:100%; max-height:100%; width:auto; height:auto; display:block; }
 
-    /* rodapé */
-    .rodape{
-      grid-column: 1 / 3;
-      grid-row: 3 / 4;
-      text-align:center;
-      color:red;
-      font-size:18px;
-      font-weight:bold;
-      margin-top:6mm;
-    }
+    /* Rodapé full width */
+    .rodape{ grid-column: 1 / 3; grid-row: 4 / 5; text-align:center; color:red; font-size:18px; font-weight:bold; margin-top:6mm; }
 
-    /* impressão / responsividade */
+    /* Responsivo para telas pequenas: empilha (cole-box fica abaixo naturalmente) */
     @media (max-width:1200px){
-      /* empilha em telas menores (coluna fixa vira cima) */
-      .etiqueta{
-        display:flex;
-        flex-direction:column;
-        padding:6mm;
-        height:auto;
-      }
+      .etiqueta{ display:flex; flex-direction:column; padding:6mm; height:auto; }
       .cole-box{ width:100%; height:36mm; }
       .qr-wrap{ width:28mm; height:28mm; }
     }
-    @media print{
-      .card{ box-shadow:none; }
-      .no-print{ display:none; }
-      body{ background:white; }
-    }
+
+    /* evitar sombras no print */
+    @media print{ .card{ box-shadow:none; } .no-print{ display:none; } body{ background:white; } }
   </style>
 </head>
 <body>
@@ -196,7 +155,6 @@
       for (let i = 1; i <= qtd; i++) {
         html += `
 <div class="etiqueta">
-  <div class="cole-box">TRANSPORTE<br><span style="font-size:12px">COLE SUA ETIQUETA AQUI</span></div>
 
   <div class="content-box">
     <div class="faixa">TRANSPORTE - COLE SUA ETIQUETA AQUI</div>
@@ -208,25 +166,27 @@
       <div><b>POLO ORIGEM:</b><span class="fill"> ${escapeHtml(origem)}</span></div>
       <div><b>CONFERÊNCIA:</b><span class="fill"> OS ${escapeHtml(os)} | NF ${escapeHtml(nf)}</span></div>
     </div>
+  </div>
 
-    <div class="volume">VOLUME DE CAIXA ${i}/${qtd}</div>
+  <div class="cole-box">TRANSPORTE<br><span style="font-size:12px">COLE SUA ETIQUETA AQUI</span></div>
 
-    <div class="dados">
-      <div class="bloco">
-        <div>OS</div>
-        <div class="valor">${escapeHtml(os)}</div>
-      </div>
+  <div class="volume">VOLUME DE CAIXA ${i}/${qtd}</div>
 
-      <div class="bloco">
-        <div>NF</div>
-        <div class="valor">${escapeHtml(nf)}</div>
-      </div>
+  <div class="dados">
+    <div class="bloco">
+      <div>OS</div>
+      <div class="valor">${escapeHtml(os)}</div>
     </div>
 
-    <div class="qrs">
-      <div class="qr-wrap" id="qros${i}"></div>
-      <div class="qr-wrap" id="qrnf${i}"></div>
+    <div class="bloco">
+      <div>NF</div>
+      <div class="valor">${escapeHtml(nf)}</div>
     </div>
+  </div>
+
+  <div class="qrs">
+    <div class="qr-wrap" id="qros${i}"></div>
+    <div class="qr-wrap" id="qrnf${i}"></div>
   </div>
 
   <div class="rodape">MANUSEAR COM CUIDADO</div>
