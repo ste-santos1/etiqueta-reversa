@@ -204,13 +204,24 @@
 
         if (elemOs) {
           elemOs.innerHTML = '';
-          const sizeOs = Math.floor(Math.min(elemOs.clientWidth, elemOs.clientHeight));
-          new QRCode(elemOs, { text: `OS:${os}|vol:${i}/${qtd}`, width: sizeOs, height: sizeOs });
+          const rawSizeOs = Math.min(elemOs.clientWidth, elemOs.clientHeight);
+          const sizeOs = Math.max(32, Math.floor(rawSizeOs) || 128); // fallback caso seja 0
+          try {
+            new QRCode(elemOs, { text: `OS:${os}|vol:${i}/${qtd}`, width: sizeOs, height: sizeOs });
+          } catch (err) {
+            console.error('Erro ao gerar QR OS:', err);
+          }
         }
+
         if (elemNf) {
           elemNf.innerHTML = '';
-          const sizeNf = Math.floor(Math.min(elemNf.clientWidth, elemNf.clientHeight));
-          new QRCode(elemNf, { text: `NF:${nf}|vol:${i}/${qtd}`, width: sizeNf, height: sizeNf });
+          const rawSizeNf = Math.min(elemNf.clientWidth, elemNf.clientHeight);
+          const sizeNf = Math.max(32, Math.floor(rawSizeNf) || 128); // fallback caso seja 0
+          try {
+            new QRCode(elemNf, { text: `NF:${nf}|vol:${i}/${qtd}`, width: sizeNf, height: sizeNf });
+          } catch (err) {
+            console.error('Erro ao gerar QR NF:', err);
+          }
         }
       }
     }
