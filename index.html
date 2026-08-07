@@ -9,38 +9,65 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
-    body{ margin:0; padding:10px; background:#f4f4f4; font-family:Arial, sans-serif; }
-    .card{ background:#fff; max-width:1000px; margin:auto; padding:12px; border-radius:6px; box-shadow:0 0 6px rgba(0,0,0,.12); }
+    body{ margin:0; padding:20px; background:#f4f4f4; font-family:Arial, sans-serif; }
+    .card{ background:#fff; max-width:1000px; margin:auto; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,.15); }
     h1{ text-align:center; color:#003366; }
-    .grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-    input,select{ width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; }
-    label{ font-weight:bold; display:block; margin-bottom:6px; }
-    button{ margin-top:12px; background:#0055cc; color:white; border:none; padding:10px 16px; cursor:pointer; border-radius:6px; }
+    .grid{ display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+    input,select{ width:100%; padding:10px; border:1px solid #ccc; border-radius:5px; }
+    label{ font-weight:bold; display:block; margin-bottom:5px; }
+    button{ margin-top:20px; background:#0055cc; color:white; border:none; padding:12px 20px; cursor:pointer; border-radius:5px; }
     button:hover{ background:#003c91; }
 
-    /* Página/impressão em A4: etiqueta com duas áreas iguais (metade/metade) */
+    /* ETIQUETA - layout with content on top (40mm) and big 'cole' area below (80mm) */
     @page { size: A4; margin: 0; }
 
     .etiqueta{
       width:180mm;
-      height:120mm;            /* total height */
+      height:120mm;
       border:3px solid black;
-      margin:8px auto 20px auto;
+      margin:20px auto;
       background:white;
       page-break-after:always;
       box-sizing:border-box;
-      padding:4mm;             /* small outer padding */
+      padding:6mm;
       display:grid;
       grid-template-columns: 1fr;
-      grid-template-rows: 60mm 60mm; /* EQUAL halves: top = cole, bottom = content */
+      grid-template-rows: 40mm 80mm; /* TOP = content (40mm), BOTTOM = cole (80mm) */
       gap:4mm;
-      page-break-inside: avoid;
     }
 
-    /* Cole box (top) full width - larger now */
-    .cole-box{
+    /* content (top) */
+    .content-box{
       grid-column: 1 / 2;
       grid-row: 1 / 2;
+      padding:4mm 6mm;
+      box-sizing:border-box;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .faixa{ border-bottom:2px solid black; text-align:left; padding:4px 0; font-weight:bold; font-size:12px; }
+    .titulo{ font-size:20px; font-weight:700; padding:6px 0; text-align:left; }
+
+    .info{ padding:0; }
+    .info div{ margin:4px 0; font-size:12.5px; }
+    .info b{ font-size:12px; }
+    .fill{ font-size:18px; font-weight:700; margin-left:6px; }
+
+    .volume{ text-align:center; font-size:16px; font-weight:bold; margin-top:4px; }
+    .dados{ display:flex; justify-content:space-around; align-items:center; margin-top:6px; }
+    .bloco{ text-align:center; }
+    .valor{ font-size:34px; font-weight:800; }
+
+    .qrs{ display:flex; gap:12mm; justify-content:center; align-items:flex-end; margin-top:6mm; }
+    .qr-wrap{ width:34mm; height:34mm; display:flex; align-items:center; justify-content:center; }
+    .qr-wrap img, .qr-wrap canvas, .qr-wrap table { max-width:100%; max-height:100%; display:block; }
+
+    /* cole (bottom) large area */
+    .cole-box{
+      grid-column: 1 / 2;
+      grid-row: 2 / 3;
       width:100%;
       height:100%;
       border:2px dashed #000;
@@ -49,39 +76,10 @@
       justify-content:center;
       text-align:center;
       font-weight:bold;
-      font-size:16px;
+      font-size:18px;
       box-sizing:border-box;
       padding:6px;
     }
-
-    /* Content box (bottom) full width */
-    .content-box{
-      grid-column: 1 / 2;
-      grid-row: 2 / 3;
-      padding:6mm 8mm;
-      box-sizing:border-box;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-    }
-
-    .header-row{ }
-    .faixa{ border-bottom:2px solid black; text-align:center; padding:4px 0; font-weight:bold; font-size:12px; }
-    .titulo{ font-size:22px; font-weight:700; padding:6px 0; text-align:left; }
-
-    .info{ padding:0; }
-    .info div{ margin:4px 0; font-size:13px; }
-    .info b{ font-size:12px; }
-    .fill{ font-size:20px; font-weight:700; margin-left:6px; }
-
-    .volume{ text-align:center; font-size:18px; font-weight:bold; margin-top:6px; }
-    .dados{ display:flex; justify-content:space-around; align-items:center; margin-top:6px; }
-    .bloco{ text-align:center; }
-    .valor{ font-size:34px; font-weight:800; }
-
-    .qrs{ display:flex; gap:12mm; justify-content:center; align-items:flex-end; margin-top:6mm; }
-    .qr-wrap{ width:30mm; height:30mm; display:flex; align-items:center; justify-content:center; }
-    .qr-wrap img, .qr-wrap canvas, .qr-wrap table { max-width:100%; max-height:100%; display:block; }
 
     .rodape{ text-align:center; color:red; font-size:14px; font-weight:bold; margin-top:6px; }
 
@@ -96,27 +94,27 @@
     <div class="grid">
       <div>
         <label>Destino</label>
-        <input id="destino" type="text" placeholder="Ex: Polo ABC" />
+        <input id="destino" type="text" placeholder="Ex: Polo ABC" value="DHL" />
       </div>
 
       <div>
         <label>Remetente</label>
-        <input id="remetente" type="text" placeholder="Ex: Empresa X" />
+        <input id="remetente" type="text" placeholder="Ex: Empresa X" value="CRED123" />
       </div>
 
       <div>
         <label>Polo Origem</label>
-        <input id="origem" type="text" placeholder="Ex: Polo Y" />
+        <input id="origem" type="text" placeholder="Ex: Polo Y" value="POLO RJ" />
       </div>
 
       <div>
         <label>OS</label>
-        <input id="os" type="text" placeholder="Número da OS" />
+        <input id="os" type="text" placeholder="Número da OS" value="64521788" />
       </div>
 
       <div>
         <label>NF</label>
-        <input id="nf" type="text" placeholder="Número da Nota Fiscal" />
+        <input id="nf" type="text" placeholder="Número da Nota Fiscal" value="123" />
       </div>
 
       <div>
@@ -146,30 +144,24 @@
       for (let i = 1; i <= qtd; i++) {
         html += `
 <div class="etiqueta">
-  <div class="cole-box">TRANSPORTE<br><span style="font-size:12px">COLE SUA ETIQUETA AQUI</span></div>
-
   <div class="content-box">
-    <div class="header-row">
-      <div class="faixa">TRANSPORTE - COLE SUA ETIQUETA AQUI</div>
-      <div class="titulo">REVERSA - REDE</div>
+    <div class="faixa">REVERSA - REDE</div>
+    <div class="titulo">REVERSA - REDE</div>
 
-      <div class="info">
-        <div><b>DESTINO:</b><span class="fill"> ${escapeHtml(destino)}</span></div>
-        <div><b>REMETENTE:</b><span class="fill"> ${escapeHtml(remetente)}</span></div>
-        <div><b>POLO ORIGEM:</b><span class="fill"> ${escapeHtml(origem)}</span></div>
-        <div><b>CONFERÊNCIA:</b><span class="fill"> OS ${escapeHtml(os)} | NF ${escapeHtml(nf)}</span></div>
-      </div>
+    <div class="info">
+      <div><b>DESTINO:</b><span class="fill"> ${escapeHtml(destino)}</span></div>
+      <div><b>REMETENTE:</b><span class="fill"> ${escapeHtml(remetente)}</span></div>
+      <div><b>POLO ORIGEM:</b><span class="fill"> ${escapeHtml(origem)}</span></div>
+      <div><b>CONFERÊNCIA:</b><span class="fill"> OS ${escapeHtml(os)} | NF ${escapeHtml(nf)}</span></div>
     </div>
 
     <div>
       <div class="volume">VOLUME DE CAIXA ${i}/${qtd}</div>
-
       <div class="dados">
         <div class="bloco">
           <div>OS</div>
           <div class="valor">${escapeHtml(os)}</div>
         </div>
-
         <div class="bloco">
           <div>NF</div>
           <div class="valor">${escapeHtml(nf)}</div>
@@ -184,6 +176,8 @@
       <div class="rodape">MANUSEAR COM CUIDADO</div>
     </div>
   </div>
+
+  <div class="cole-box">TRANSPORTE - COLE SUA ETIQUETA AQUI</div>
 </div>
 `;
       }
@@ -209,7 +203,6 @@
       }
     }
 
-    // pequena função para escapar HTML (evita injeção simples)
     function escapeHtml(str) {
       return String(str)
         .replace(/&/g, '&amp;')
@@ -218,6 +211,11 @@
         .replace(/\"/g, '&quot;')
         .replace(/'/g, '&#39;');
     }
+
+    // auto-generate on load for the example when used by the workflow/script
+    window.addEventListener('DOMContentLoaded', () => {
+      // don't auto-generate in the editor view; leave for explicit action
+    });
   </script>
 </body>
 </html>
