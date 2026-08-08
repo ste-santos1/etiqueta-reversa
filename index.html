@@ -9,7 +9,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <style>
-    body{ margin:0; padding:12px; background:#f4f4f4; font-family:Arial, sans-serif; }
+    body{ margin:0; padding:6px; background:#f4f4f4; font-family:Arial, sans-serif; }
     .card{ background:#fff; max-width:900px; margin:auto; padding:12px; border-radius:8px; box-shadow:0 0 8px rgba(0,0,0,.12); }
     h1{ text-align:center; color:#003366; }
     .grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
@@ -21,21 +21,21 @@
     /* A5 page and label sizing
        Set page to A5 and make the label fit comfortably. Increase the "cole" area (bottom)
        and reduce QR sizes so the transport box can grow. */
-    @page { size: A5; margin: 0; }
+    @page { size: A5; margin: 4mm; }
 
     .etiqueta{
       /* A5 inner label sized to fit on A5 portrait with small page padding */
       width:140mm;           /* slightly narrower than A5 width (148mm) to respect printer margins */
       height:200mm;          /* taller than previous so we can enlarge the cole area */
-      border:3px solid black;
-      margin:8px auto;
+      border:4px solid black;
+      margin:4px auto;
       background:white;
       page-break-after:always;
       box-sizing:border-box;
       padding:6mm;
       display:grid;
       grid-template-columns: 1fr;
-      grid-template-rows: 40mm 1fr; /* top = content fixed 40mm, bottom = cole fills remaining space */
+      grid-template-rows: 120mm 1fr; /* top = content larger so the transporte box is pushed further down */
       gap:6mm;
     }
 
